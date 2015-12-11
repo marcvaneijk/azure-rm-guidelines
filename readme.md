@@ -13,18 +13,18 @@ To make sure your template is added to Azure.com index, please follow these guid
 ## Files, folders and naming conventions
 
 1. Every template must be contained in its own folder. Name this folder something that describes what your template does. Usually this naming pattern looks like **appName-osName** or **level-platformCapability** (e.g. 101-vm-user-image) 
-	# **Protip** - Try to keep the name of your template folder short so that it fits inside the Github folder name column width.
+	* **Protip** - Try to keep the name of your template folder short so that it fits inside the Github folder name column width.
 2. Github uses ASCII for ordering files and folder. For consistent ordering create all files and folder in **lowercase**.
 3. Include a **readme.md** file that explains how the template works. 
-	# Guidelines on the readme.md file below.
+	* Guidelines on the readme.md file below.
 4. The template file must be named **azuredeploy.json**.
 5. There should be be a parameters file name **azuredeploy.parameters.json**. 
-	# Please fill out the values for the parameters according to rules defined in the template (allowed values etc.), For parameters without rules, a simple "changeme" will do as the acomghbot only checks for sytactic correctness using the ARM Validate Template [API](https://msdn.microsoft.com/en-us/library/azure/dn790547.aspx).
+	* Please fill out the values for the parameters according to rules defined in the template (allowed values etc.), For parameters without rules, a simple "changeme" will do as the acomghbot only checks for sytactic correctness using the ARM Validate Template [API](https://msdn.microsoft.com/en-us/library/azure/dn790547.aspx).
 6. Parameter files can be used to specify the parameters for different environments. (e.g. dev, test, production). Specify additional parameter files in the format **azuredeploy.dev.parameters.json**. Where *dev* describes the environment.
 7. The template folder must contain a **metadata.json** file to allow the template to be indexed on [Azure.com](http://azure.microsoft.com/).
-	# Guidelines on the metadata.json file below.
+	* Guidelines on the metadata.json file below.
 8. Create a PowerShell script to deploy the template named **azuredeploy.ps1**. Create the script based on the Microsoft Azure PowerShell module version 1 or below.
-	# Guidelines on the azuredeploy.ps1 file below.
+	* Guidelines on the azuredeploy.ps1 file below.
 9. The **custom scripts** that are needed for successful template execution must be placed in a folder called **scripts**.
 10. Linked templates must be placed in a folder called **nested**.
 11. Images used in the readme.md must be placed in a folder called **images**.
@@ -158,7 +158,7 @@ The following guidelines are relevant to the main deployment templates and neste
 	Create a variable that concatenates the storageAccountname and the namespace to a URI.
 
 	```JSON
-[concat('http://',variables('newStorageAccountNameUnique'),'.blob.'parameters(' storageEndpoint'),'/',variables('vmStorageAccountContainerName'),'/',variables('OSDiskName'),'.vhd')]
+"diskUri":"[concat('http://',variables('newStorageAccountNameUnique'),'.blob.'parameters(' storageEndpoint'),'/',variables('vmStorageAccountContainerName'),'/',variables('OSDiskName'),'.vhd')]"
 	```
 
 9. Create a parameter to specify the **keyVault** namespace. Set the default value of the parameter to **vault.azure.net**. Additional endpoints can be specified in the allowed value property. 
