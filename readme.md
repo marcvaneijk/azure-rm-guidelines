@@ -249,9 +249,9 @@ New-AzureRmResourceGroupDeployment -Name $DeploymentName -ResourceGroupName $Res
 
 # Get Resource Group Deployments
 Get-AzureRmResourceGroupDeployment -ResourceGroupName $ResourceGroupName | ft DeploymentName, ProvisioningState
+```
 
 ## Single template or nested templates
-```
 
 It is obvious to create a single deployment template for deploying a single resource. Nested templates are more common for more advanced scenarios. The following guidance helps to decide between a single template or a decomposed nested template design. 
 
