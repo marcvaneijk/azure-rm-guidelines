@@ -226,7 +226,32 @@ The following guidelines are relevant to the main deployment templates and neste
 10. Dependencies between resources can be defined with the expression **dependsOn**. This creates an explicit dependecy. The expression **reference()** can be used to create an implicit dependency. The guidance is to use the reference() to avoid the risk having an unnecessary dependsOn element stop the deployment engine from doing aspects of the deployment in parallel. Reference can only be used against a single resource ([syntax](https://azure.microsoft.com/en-us/documentation/articles/resource-group-template-functions/#reference)), and is used for cases where the properties of one resource are needed for the provisioning of another resource. For example; a virtual machine just needs the resourceId (not properties) in this case dependsOn should be used.
 11. Use **tags** to add metadata to resources for billing detail purposes. Tags should not be used to provide metadata that you will use to identify and query links between resources.
 
+## azuredeploy.ps1
+
+The PowerShell script to deploy the template should be named **azuredeploy.ps1**. The following script shows an example
+
+```PowerShell
+# Login to your subscription
+Login-AzureRmAccount
+
+# Variables
+$ResourceGroupLocation = "West US"
+$ResourceGroupName = "MyResourceGroup"
+$TemplateFile = "https://raw.githubusercontent.com/marcvaneijk/guidelines/master/azuredeploy.json"
+$TemplateParameterFile = "https://raw.githubusercontent.com/marcvaneijk/guidelines/master/azuredeploy.parameters.json"
+$DeploymentName = (Get-ChildItem $TemplateFile).BaseName + ((get-date).ToUniversalTime()).ToString('MMddyyyyHHmmss')
+
+# Create new Resource Group
+New-AzureRmResourceGroup -Name $ResourceGroupName -Location $ResourceGroupLocation
+
+# New Resource Group Deployment
+New-AzureRmResourceGroupDeployment -Name $DeploymentName -ResourceGroupName $ResourceGroupName -TemplateFile $TemplateFile -TemplateParameterFile $TemplateParameterFile
+
+# Get Resource Group Deployments
+Get-AzureRmResourceGroupDeployment -ResourceGroupName $ResourceGroupName | ft DeploymentName, ProvisioningState
+
 ## Single template or nested templates
+```
 
 It is obvious to create a single deployment template for deploying a single resource. Nested templates are more common for more advanced scenarios. The following guidance helps to decide between a single template or a decomposed nested template design. 
 
