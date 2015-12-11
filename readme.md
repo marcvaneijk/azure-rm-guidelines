@@ -95,11 +95,13 @@ The following guidelines are relevant to the main deployment templates and neste
 4. Every parameter in the template must have the **lower-case description** tag specified using the metadata property. This looks like below
 
 	```JSON
-"newStorageAccountName": {
-      "type": "string",
-      "metadata": {
-          "description": "The name of the new storage account created to store the VMs disks"
-      }
+"parameters": {
+  "newStorageAccountName": {
+    "type": "string",
+    "metadata": {
+      "description": "The name of the new storage account created to store the VMs disks"
+    }
+  }
 }
 	```
 
@@ -118,42 +120,59 @@ The following guidelines are relevant to the main deployment templates and neste
   "variables": {
       "newStorageAccountNameToLower": "[toLower(parameters('storageAccountName'))]",
       "newStorageAccountNameUnique": "[concat(variables('newStorageAccountNameToLower'), uniqueString(resourceGroup().id))]"
-  },
+  }
 	```
 
 6. Every resource in the template must have the lower-case **comments** property specified.
 
 	```JSON
-      "name": "[variables('newStorageAccountNameUnique')]",
-      "type": "Microsoft.Storage/storageAccounts",
-      "location": "[resourceGroup().location]",
-      "apiVersion": "2015-06-15",
-      **"comments": "This storage account is used to store the VM disks"**
+"resources": [
+  {
+    "name": "[variables('newStorageAccountNameUnique')]",
+    "type": "Microsoft.Storage/storageAccounts",
+    "location": "[resourceGroup().location]",
+    "apiVersion": "2015-06-15",
+    "comments": "This storage account is used to store the VM disks",
+    "properties": {
+      "accountType": "Standard_GRS"
+    }
+  }
+]
 	```
 
 7. Do not use a parameter to specify the **location**. Use the location property of the resourceGroup instead. By using the **resourceGroup().location** expression for all your resources, the resources in the template will automatically be deployed in the same location as the resource group.
 
 	```JSON
-"name": "[variables('newStorageAccountNameUnique')]",
-"type": "Microsoft.Storage/storageAccounts",
-**"location": "[resourceGroup().location]"**,
-"apiVersion": "2015-06-15",
-"comments": "This storage account is used to store the VM disks"
+"resources": [
+  {
+    "name": "[variables('newStorageAccountNameUnique')]",
+    "type": "Microsoft.Storage/storageAccounts",
+    "location": "[resourceGroup().location]",
+    "apiVersion": "2015-06-15",
+    "comments": "This storage account is used to store the VM disks",
+    "properties": {
+      "accountType": "Standard_GRS"
+    }
+  }
+]
 	```
 
-8. Create a parameter to specify the storage namespace. Set the default value of the parameter to **core.windows.net**. Additional endpoints can be specified in the allowed value property. 
+8. Create a parameter to specify the **storage** namespace. Set the default value of the parameter to **core.windows.net**. Additional endpoints can be specified in the allowed value property. 
 
 	```JSON
-    "storageNamespace": {
-      "type": "string",
-      "defaultValue": "core.windows.net",
-      "allowedValues": [
-        "core.windows.net",
-        "local.domain.tld"
-      ],
-      "metadata": {
-        "description": "The endpoint namespace for storage"
-      }
+"parameters": {
+  "storageNamespace": {
+    "type": "string",
+    "defaultValue": "core.windows.net",
+    "allowedValues": [
+      "core.windows.net",
+      "local.domain.tld"
+    ],
+    "metadata": {
+      "description": "The endpoint namespace for storage"
+    }
+  }
+}
 	```
 	Create a variable that concatenates the storageAccountname and the namespace to a URI.
 
@@ -164,23 +183,27 @@ The following guidelines are relevant to the main deployment templates and neste
 9. Create a parameter to specify the **keyVault** namespace. Set the default value of the parameter to **vault.azure.net**. Additional endpoints can be specified in the allowed value property. 
 
 	```JSON
-      "keyVaultNamespace": {
-        "type": "string",
-        "defaultValue": "vault.azure.net",
-        "allowedValues": [
-          "vault.azure.net",
-          "vault.domain.tld"
-        ],
-        "metadata": {
-          "description": "The endpoint namespace for storage"
-        }
-      }
+"parameters": {
+  "keyVaultNamespace": {
+    "type": "string",
+    "defaultValue": "vault.azure.net",
+    "allowedValues": [
+      "vault.azure.net",
+      "vault.domain.tld"
+    ],
+    "metadata": {
+      "description": "The endpoint namespace for storage"
+    }
+  }
+}
 	```
 
 	Create a variable that concatenates the key vault name and the namespace to a URI.
 
 	```JSON
-"keyVaultUri": "[concat('https://',parameters('keyVaultName'),'.'parameters(' keyVaultNamespace'))]"
+"variables": {
+  "keyVaultUri": "[concat('https://',parameters('keyVaultName'),'.',parameters(' keyVaultNamespace'))]"
+}
 	```
 
 10. Dependencies between resources can be defined with the expression **dependsOn**. This creates an explicit dependecy. The expression **reference()** can be used to create an implicit dependency. The guidance is to use the reference() to avoid the risk having an unnecessary dependsOn element stop the deployment engine from doing aspects of the deployment in parallel. Reference can only be used against a single resource ([syntax](https://azure.microsoft.com/en-us/documentation/articles/resource-group-template-functions/#reference)), and is used for cases where the properties of one resource are needed for the provisioning of another resource. For example; a virtual machine just needs the resourceId (not properties) in this case dependsOn should be used.
@@ -199,19 +222,19 @@ It is obvious to create a single deployment template for deploying a single reso
 It is possible to deploy a nested template based on parameter input. The parameter input is used concatenated a path to a nested template. Based on the user input a different template is deployed. This enabled a conditional nested template deployment. Store all nested templates in the **nested** folder. The paramater is used to define the name of the template. Ensure the **allowedValues** of the input paramater match the names of the nested templates.
 
 ```JSON
-    "parameters": {
-        "newOrExisting": {
-            "type": "String",
-            "allowedValues": [
-                "new",
-                "existing"
-            ]
-        }
-    },
-    "variables": {
-      "templateBaseUrl": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-create-availability-set",
-      "templateLink": "[concat(variables('templateBaseUrl'),'/nested/',parameters('newOrExisting'),'.json')]"
-    }
+"parameters": {
+  "newOrExisting": {
+    "type": "string",
+    "allowedValues": [
+      "new",
+      "existing"
+    ]
+  }
+},
+"variables": {
+  "templateBaseUrl": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-create-availability-set",
+  "templateLink": "[concat(variables('templateBaseUrl'),'/nested/',parameters('newOrExisting'),'.json')]"
+}
 ```
 
 ## Nested templates design for more advanced scenarios
