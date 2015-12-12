@@ -194,7 +194,7 @@ The following guidelines are relevant to the main deployment templates and neste
 ]
 	```
 
-9. Create a parameter to specify the **storage** namespace. Set the default value of the parameter to **core.windows.net**. Additional endpoints can be specified in the allowed value property. 
+9. If you use Storage in your template, Create a parameter to specify the **storage** namespace. Set the default value of the parameter to **core.windows.net**. Additional endpoints can be specified in the allowed value property. 
 
 	```JSON
 "parameters": {
@@ -219,7 +219,7 @@ The following guidelines are relevant to the main deployment templates and neste
 }
 	```
 
-10. Create a parameter to specify the **keyVault** namespace. Set the default value of the parameter to **vault.azure.net**. Additional endpoints can be specified in the allowed value property. 
+10. If you use Key Vault in your template, create a parameter to specify the **keyVault** namespace. Set the default value of the parameter to **vault.azure.net**. Additional endpoints can be specified in the allowed value property. 
 
 	```JSON
 "parameters": {
@@ -231,7 +231,7 @@ The following guidelines are relevant to the main deployment templates and neste
       "vault.domain.tld"
     ],
     "metadata": {
-      "description": "The endpoint namespace for storage"
+      "description": "The endpoint namespace for Key Vault"
     }
   }
 }
