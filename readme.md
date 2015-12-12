@@ -139,15 +139,38 @@ The following guidelines are relevant to the main deployment templates and neste
 }
 	```
 
-6. Every resource in the template must have the lower-case **comments** property specified.
+6. Do not hardcode the **apiVersion** for a resource. Define a **variable** apiVersion in the variables section. Potentially different resources could use different apiVersions. In that case, you'll need to define multiple apiVersion in a complex object.
+
+	```JSON
+"variables": {
+  "apiVersion": {
+    "default": "2015-08-01",
+    "storage": "2015-06-15"
+  }
+},
+"resources": [
+  {
+    "name": "[variables('storageAccountName')]",
+    "type": "Microsoft.Storage/storageAccounts",
+    "apiVersion": "[variables(apiVersion).storage]",
+    "location": "[resourceGroup().location]",
+    "comments": "This storage account is used to store the VM disks",
+    "properties": {
+      "accountType": "Standard_GRS"
+    }
+  }
+]
+	```
+	
+7. Every resource in the template must have the lower-case **comments** property specified.
 
 	```JSON
 "resources": [
   {
-    "name": "[variables('newStorageAccountNameUnique')]",
+    "name": "[variables('storageAccountName')]",
     "type": "Microsoft.Storage/storageAccounts",
+    "apiVersion": "[variables(apiVersion).storage]",
     "location": "[resourceGroup().location]",
-    "apiVersion": "2015-06-15",
     "comments": "This storage account is used to store the VM disks",
     "properties": {
       "accountType": "Standard_GRS"
@@ -161,10 +184,10 @@ The following guidelines are relevant to the main deployment templates and neste
 	```JSON
 "resources": [
   {
-    "name": "[variables('newStorageAccountNameUnique')]",
+    "name": "[variables('storageAccountName')]",
     "type": "Microsoft.Storage/storageAccounts",
+    "apiVersion": "[variables(apiVersion).storage]",
     "location": "[resourceGroup().location]",
-    "apiVersion": "2015-06-15",
     "comments": "This storage account is used to store the VM disks",
     "properties": {
       "accountType": "Standard_GRS"
