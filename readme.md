@@ -179,7 +179,7 @@ The following guidelines are relevant to the main deployment templates and neste
 ]
 	```
 
-7. Do not use a parameter to specify the **location**. Use the location property of the resourceGroup instead. By using the **resourceGroup().location** expression for all your resources, the resources in the template will automatically be deployed in the same location as the resource group.
+8. Do not use a parameter to specify the **location**. Use the location property of the resourceGroup instead. By using the **resourceGroup().location** expression for all your resources, the resources in the template will automatically be deployed in the same location as the resource group.
 
 	```JSON
 "resources": [
@@ -196,7 +196,7 @@ The following guidelines are relevant to the main deployment templates and neste
 ]
 	```
 
-8. Create a parameter to specify the **storage** namespace. Set the default value of the parameter to **core.windows.net**. Additional endpoints can be specified in the allowed value property. 
+9. Create a parameter to specify the **storage** namespace. Set the default value of the parameter to **core.windows.net**. Additional endpoints can be specified in the allowed value property. 
 
 	```JSON
 "parameters": {
@@ -219,7 +219,7 @@ The following guidelines are relevant to the main deployment templates and neste
 "diskUri":"[concat('http://',variables('newStorageAccountNameUnique'),'.blob.'parameters(' storageEndpoint'),'/',variables('vmStorageAccountContainerName'),'/',variables('OSDiskName'),'.vhd')]"
 	```
 
-9. Create a parameter to specify the **keyVault** namespace. Set the default value of the parameter to **vault.azure.net**. Additional endpoints can be specified in the allowed value property. 
+10. Create a parameter to specify the **keyVault** namespace. Set the default value of the parameter to **vault.azure.net**. Additional endpoints can be specified in the allowed value property. 
 
 	```JSON
 "parameters": {
@@ -245,8 +245,8 @@ The following guidelines are relevant to the main deployment templates and neste
 }
 	```
 
-10. Dependencies between resources can be defined with the expression **dependsOn**. This creates an explicit dependecy. The expression **reference()** can be used to create an implicit dependency. The guidance is to use the reference() to avoid the risk having an unnecessary dependsOn element stop the deployment engine from doing aspects of the deployment in parallel. Reference can only be used against a single resource ([syntax](https://azure.microsoft.com/en-us/documentation/articles/resource-group-template-functions/#reference)), and is used for cases where the properties of one resource are needed for the provisioning of another resource. For example; a virtual machine just needs the resourceId (not properties) in this case dependsOn should be used.
-11. Use **tags** to add metadata to resources for billing detail purposes. Tags should not be used to provide metadata that you will use to identify and query links between resources.
+11. Dependencies between resources can be defined with the expression **dependsOn**. This creates an explicit dependecy. The expression **reference()** can be used to create an implicit dependency. The guidance is to use the reference() to avoid the risk having an unnecessary dependsOn element stop the deployment engine from doing aspects of the deployment in parallel. Reference can only be used against a single resource ([syntax](https://azure.microsoft.com/en-us/documentation/articles/resource-group-template-functions/#reference)), and is used for cases where the properties of one resource are needed for the provisioning of another resource. For example; a virtual machine just needs the resourceId (not properties) in this case dependsOn should be used.
+12. Use **tags** to add metadata to resources for billing detail purposes. Tags should not be used to provide metadata that you will use to identify and query links between resources.
 
 ## azuredeploy.ps1
 
