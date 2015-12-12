@@ -122,22 +122,21 @@ The following guidelines are relevant to the main deployment templates and neste
 }
 	```
 
-5. **Storage account names** need to be lower case and can't contain hyphens (-) in addition to other domain name restrictions. They also need to be globally unique. This should be configured with two variables (using the expressions **toLower** and **uniqueString**). A storageaccount has a limit of 24 characters. Set the maxLength of 11 to the parameter for the newStorageAccountName. This allows the uniqueString of 13 characters to be appended.
+5. **Storage account names** need to be lower case and can't contain hyphens (-) in addition to other domain name restrictions. They also need to be globally unique. This should be configured with a variables (using the expressions **replace**, **toLower** and **uniqueString**). A storageaccount has a limit of 24 characters. Set the maxLength of 11 to the parameter for the newStorageAccountName. This allows the uniqueString of 13 characters to be appended.
 
 	```JSON
 "parameters": {
-    "storageAccountname": {
-      "type": "string",
-      "maxLength": 11,
-      "metadata": {
-        "description": "Name of the new storage account. Maximum Length 11 alphabetic and/or numeric characters."
-      }
+  "storageAccountNamePrefix": {
+    "type": "string",
+    "maxLength": 11,
+    "metadata": {
+      "description": "Name prefix of the Storage Account"
     }
-  },
-  "variables": {
-      "newStorageAccountNameToLower": "[toLower(parameters('storageAccountName'))]",
-      "newStorageAccountNameUnique": "[concat(variables('newStorageAccountNameToLower'), uniqueString(resourceGroup().id))]"
   }
+},
+"variables": {
+  "storageAccountName": "[replace(replace(tolower(concat(parameters('storageAccountNamePrefix'),  uniquestring(resourceGroup().id))), '-',''),'.','')]"
+}
 	```
 
 6. Every resource in the template must have the lower-case **comments** property specified.
