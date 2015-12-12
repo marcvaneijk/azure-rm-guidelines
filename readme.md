@@ -214,7 +214,9 @@ The following guidelines are relevant to the main deployment templates and neste
 	Create a variable that concatenates the storageAccountname and the namespace to a URI.
 
 	```JSON
-"diskUri":"[concat('http://',variables('newStorageAccountNameUnique'),'.blob.'parameters(' storageEndpoint'),'/',variables('vmStorageAccountContainerName'),'/',variables('OSDiskName'),'.vhd')]"
+"variables": {
+  "diskUri":"[concat('http://',variables('newStorageAccountNameUnique'),'.blob.'parameters(' storageEndpoint'),'/',variables('vmStorageAccountContainerName'),'/',variables('OSDiskName'),'.vhd')]"
+}
 	```
 
 10. Create a parameter to specify the **keyVault** namespace. Set the default value of the parameter to **vault.azure.net**. Additional endpoints can be specified in the allowed value property. 
@@ -245,7 +247,7 @@ The following guidelines are relevant to the main deployment templates and neste
 
 11. Dependencies between resources can be defined with the expression **dependsOn**. This creates an explicit dependecy. The expression **reference()** can be used to create an implicit dependency. The guidance is to use the reference() to avoid the risk having an unnecessary dependsOn element stop the deployment engine from doing aspects of the deployment in parallel. Reference can only be used against a single resource ([syntax](https://azure.microsoft.com/en-us/documentation/articles/resource-group-template-functions/#reference)), and is used for cases where the properties of one resource are needed for the provisioning of another resource. For example; a virtual machine just needs the resourceId (not properties) in this case dependsOn should be used.
 12. Use **tags** to add metadata to resources for billing detail purposes. Tags should not be used to provide metadata that you will use to identify and query links between resources.
-13. You can **group variables** into **complex objects**. You can reference a value from a complex object in the format variable.subentry
+13. You can **group variables** into **complex objects**. You can reference a value from a complex object in the format `variable.subentry`
 
 	```JSON
 "variables": {
