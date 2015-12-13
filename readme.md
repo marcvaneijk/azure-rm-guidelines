@@ -135,7 +135,7 @@ The following guidelines are relevant to the main deployment templates and neste
   }
 },
 "variables": {
-  "storageAccountName": "[replace(replace(tolower(concat(parameters('storageAccountNamePrefix'),  uniquestring(resourceGroup().id))), '-',''),'.','')]"
+  "storageAccountName": "[replace(replace(tolower(concat(parameters('storageAccountNamePrefix'), uniquestring(resourceGroup().id))), '-',''),'.','')]"
 }
 	```
 
