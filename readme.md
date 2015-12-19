@@ -139,18 +139,24 @@ The following guidelines are relevant to the main deployment templates and neste
 }
 	```
 
-6. Do not hardcode the **apiVersion** for a resource. Define a **variable** apiVersion in the variables section. Potentially different resources could use different apiVersions. In that case, you'll need to define multiple apiVersion in a complex object.
+6. Do not hardcode the **apiVersion** for a resource. Create a **complex object variable** with the name apiVersion. Define a sub value for each resource provider, containing the api versions for each resource type used in the template. With this complex object the the apiVersion property of the resource uses the same namespace as the resource type. This also allows you to easily update an apiVersion for a specific resource type.
 
 	```JSON
 "variables": {
-  "apiVersion": "2015-08-01",
-  "apiVersionStorage": "2015-06-15"
+  "apiVersion": {
+    "resources": { "deployments": "2015-01-01" },
+    "storage": { "storageAccounts": "2015-06-15" },
+    "network": {
+      "virtualNetworks": "2015-06-15",
+      "networkSecurityGroups": "2015-06-15"
+    }
+  }
 },
 "resources": [
   {
     "name": "[variables('storageAccountName')]",
     "type": "Microsoft.Storage/storageAccounts",
-    "apiVersion": "[variables('apiVersionStorage')]",
+    "apiVersion": "[variables('apiVersion').storage.storageAccounts]",
     "location": "[resourceGroup().location]",
     "comments": "This storage account is used to store the VM disks",
     "properties": {
