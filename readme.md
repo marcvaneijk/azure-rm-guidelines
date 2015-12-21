@@ -221,7 +221,7 @@ The following guidelines are relevant to the main deployment templates and neste
 
 	```JSON
 "variables": {
-  "diskUri":"[concat('http://',variables('newStorageAccountNameUnique'),'.blob.'parameters('storageEndpoint'),'/',variables('vmStorageAccountContainerName'),'/',variables('OSDiskName'),'.vhd')]"
+  "diskUri":"[concat('http://',variables('storageAccountName'),'.blob.'parameters('storageEndpoint'),'/',variables('vmStorageAccountContainerName'),'/',variables('OSDiskName'),'.vhd')]"
 }
 	```
 
