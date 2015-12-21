@@ -25,7 +25,7 @@ We're following basic GitHub Flow. If you have ever contributed to an open sourc
  * Push your new branch to your GitHub Fork (`git push origin my-new-template`)
  * Visit this repository in GitHub and create a Pull Request.
 
-**For a detailed tutorial, [please check out our tutorial](tutorial/git-tutorial.md)!**
+**For a detailed tutorial, [please check out our tutorial](../tutorial/git-tutorial.md)!**
 
 ## Files, folders and naming conventions
 
@@ -93,7 +93,7 @@ The metadata.json file will be validated using these rules
 
 **githubUsername**
 
-+ Username must be the same as the username of the author submitting the Pull Request
++ This is the username of the original template author. Please do not change this
 + This is used to display template author and Github profile pic in the Azure.com index
 
 **dateUpdated**
@@ -250,10 +250,26 @@ The following guidelines are relevant to the main deployment templates and neste
   "keyVaultUri": "[concat('https://',parameters('keyVaultName'),'.',parameters(' keyVaultNamespace'))]"
 }
 	```
-
-11. Dependencies between resources can be defined with the expression **dependsOn**. This creates an explicit dependecy. The expression **reference()** can be used to create an implicit dependency. The guidance is to use the reference() to avoid the risk having an unnecessary dependsOn element stop the deployment engine from doing aspects of the deployment in parallel. Reference can only be used against a single resource ([syntax](https://azure.microsoft.com/en-us/documentation/articles/resource-group-template-functions/#reference)), and is used for cases where the properties of one resource are needed for the provisioning of another resource. For example; a virtual machine just needs the resourceId (not properties) in this case dependsOn should be used.
-12. Use **tags** to add metadata to resources for billing detail purposes. Tags should not be used to provide metadata that you will use to identify and query links between resources.
-13. You can **group variables** into **complex objects**. You can reference a value from a complex object in the format `variable.subentry` (e.g. "[variables('apiVersion').storage]").
+11. **Passwords** must be passed into parameters of type `securestring`.
+    * Passwords must also be passed to customScriptExtension using the `commandToExecute` property in `protectedSettings`. This will look like below
+	```JSON
+"properties": {
+  "publisher": "Microsoft.OSTCExtensions",
+  "type": "CustomScriptForLinux",
+  "settings": {
+    "fileUris": [
+      "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/lamp-app/install_lamp.sh"
+    ]
+    "protectedSettings": {
+      "commandToExecute": "[concat('sh install_lamp.sh ', parameters('mySqlPassword'))]"
+    }
+  }
+}
+	```
+	
+12. Dependencies between resources can be defined with the expression **dependsOn**. This creates an explicit dependecy. The expression **reference()** can be used to create an implicit dependency. The guidance is to use the reference() to avoid the risk having an unnecessary dependsOn element stop the deployment engine from doing aspects of the deployment in parallel. Reference can only be used against a single resource ([syntax](https://azure.microsoft.com/en-us/documentation/articles/resource-group-template-functions/#reference)), and is used for cases where the properties of one resource are needed for the provisioning of another resource. For example; a virtual machine just needs the resourceId (not properties) in this case dependsOn should be used.
+13. Use **tags** to add metadata to resources for billing detail purposes. Tags should not be used to provide metadata that you will use to identify and query links between resources.
+14. You can **group variables** into **complex objects**. You can reference a value from a complex object in the format `variable.subentry` (e.g. "[variables('apiVersion').storage]").
 
 	```JSON
 "variables": {
@@ -355,7 +371,7 @@ See the starter template [here](https://github.com/Azure/azure-quickstart-templa
 
 ## Best practices
 
-+ It is a good practice to pass your template through a JSON linter to remove extraneous commas, parenthesis, brackets that may break the "Deploy to Azure" experience. Try http://jsonlint.com/ or a linter package for your favorite editing environment (Atom, Sublime Text, Visual Studio etc.)
++ It is a good practice to pass your template through a JSON linter to remove extraneous commas, parenthesis, brackets that may break the "Deploy to Azure" experience. Try http://jsonlint.com/ or a linter package for your favorite editing environment (Visual Studio Code, Atom, Sublime Text, Visual Studio etc.)
 + It's also a good idea to format your JSON for better readability. You can use a JSON formatter package for your local editor or [format online using this link](https://www.bing.com/search?q=json+formatter).
 
 Starter template
@@ -387,9 +403,10 @@ We are in the process of activating automated template validation through Travis
 To ensure your template passes, special placeholder values are required when deploying a template, depending what the parameter is used for:
 
 - **GEN_UNIQUE** - use this placeholder for new storage account names, domain names for public ips and other fields that need a unique name. The value will always be alpha numeric value with a length of 18 characters.
+- **GEN_UNIQUE_[N]** - use this placeholder for new storage account names, domain names for public ips and other fields that need a unique name. The value will always be alpha numeric value with a length of `[N]`, where `[N]` can be any number from 3 to 32 inclusive.
 - **GEN_SSH_PUB_KEY** - use this placeholder if you need an SSH public key
 - **GEN_PASSWORD** - use this placeholder if you need an azure-compatible password for a VM
-- **GEN_UNIQUE_[N]** - use this placeholder for new storage account names, domain names for public ips and other fields that need a unique name. The value will always be alpha numeric value with a length of `[N]`, where `[N]` can be any number from 3 to 32 inclusive.
+
 
 Here's an example in an `azuredeploy.parameters.json` file:
 
