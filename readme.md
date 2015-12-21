@@ -260,9 +260,9 @@ The following guidelines are relevant to the main deployment templates and neste
     "fileUris": [
       "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/lamp-app/install_lamp.sh"
     ]
-    "protectedSettings": {
-      "commandToExecute": "[concat('sh install_lamp.sh ', parameters('mySqlPassword'))]"
-    }
+  },
+  "protectedSettings": {
+    "commandToExecute": "[concat('sh install_lamp.sh ', parameters('mySqlPassword'))]"
   }
 }
 	```
