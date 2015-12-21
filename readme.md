@@ -272,25 +272,34 @@ The following guidelines are relevant to the main deployment templates and neste
 14. You can **group variables** into **complex objects**. You can reference a value from a complex object in the format **variable.subentry** (e.g. `"[variables('apiVersion').storage]"`).
 
 	```JSON
+"parameters": {
+  "storageAccountNamePrefix": {
+    "type": "string",
+    "maxLength": 11,
+    "metadata": {
+      "description": "Name prefix of the Storage Account. The maximum length of the prefix is 11 characters"
+    }
+  }
+},
 "variables": {
   "apiVersion": {
-    "default": "2015-08-01",
-    "storage": "2015-06-15"
+    "storage": { "storageAccounts": "2015-06-15" }
   },
-  "uri": {
-    "templateBase": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-create-availability-set",
-    "keyVaultUri": "[concat('https://',parameters('keyVaultName'),'.',parameters(' keyVaultNamespace'))]"
+  "storage": {
+    "storageAccounts": {
+      "name": "[replace(replace(tolower(concat(parameters('storageAccountNamePrefix'), uniquestring(resourceGroup().id))), '-',''),'.','')]",
+      "type": "Standard_LRS"
+    }
   }
 },
 "resources": [
   {
-    "name": "[variables('storageAccountName')]",
     "type": "Microsoft.Storage/storageAccounts",
-    "apiVersion": "[variables('apiVersion').storage]",
+    "name": "[variables('storage').storageAccounts.name]",
+    "apiVersion": "[variables('apiVersion').storage.storageAccounts]",
     "location": "[resourceGroup().location]",
-    "comments": "This storage account is used to store the VM disks",
     "properties": {
-      "accountType": "Standard_GRS"
+      "accountType": "[variables('storage').storageAccounts.type]"
     }
   }
 ]
