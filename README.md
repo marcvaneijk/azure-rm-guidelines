@@ -113,10 +113,10 @@ The following guidelines are relevant to the main deployment templates and neste
 
 	```JSON
 "parameters": {
-  "newStorageAccountName": {
+  "storageAccountType": {
     "type": "string",
     "metadata": {
-      "description": "The name of the new storage account created to store the VMs disks"
+      "description": "The type of the new storage account created to store the VMs disks"
     }
   }
 }
@@ -202,7 +202,7 @@ The following guidelines are relevant to the main deployment templates and neste
     "defaultValue": "core.windows.net",
     "allowedValues": [
       "core.windows.net",
-      "local.domain.tld"
+      "azurestack.local"
     ],
     "metadata": {
       "description": "The endpoint namespace for storage"
@@ -227,7 +227,7 @@ The following guidelines are relevant to the main deployment templates and neste
     "defaultValue": "vault.azure.net",
     "allowedValues": [
       "vault.azure.net",
-      "vault.domain.tld"
+      "vault.azurestack.local"
     ],
     "metadata": {
       "description": "The endpoint namespace for Key Vault"
@@ -265,22 +265,13 @@ The following guidelines are relevant to the main deployment templates and neste
 14. You can **group variables** into **complex objects**. You can reference a value from a complex object in the format **variable.subentry** (e.g. `"[variables('apiVersion').storage]"`).
 
 	```JSON
-"parameters": {
-  "storageAccountNamePrefix": {
-    "type": "string",
-    "maxLength": 11,
-    "metadata": {
-      "description": "Name prefix of the Storage Account. The maximum length of the prefix is 11 characters"
-    }
-  }
-},
 "variables": {
   "apiVersion": {
     "storage": { "storageAccounts": "2015-06-15" }
   },
   "storage": {
     "storageAccounts": {
-      "name": "[replace(replace(tolower(concat(parameters('storageAccountNamePrefix'), uniquestring(resourceGroup().id))), '-',''),'.','')]",
+      "name": "[concat(uniquestring(resourceGroup().id),'storage')]",
       "type": "Standard_LRS"
     }
   }
