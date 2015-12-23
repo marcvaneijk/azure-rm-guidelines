@@ -300,7 +300,26 @@ The following guidelines are relevant to the main deployment templates and neste
 
 	A complex object cannot contain an expression that references a value from a complex object. Define a seperate variable for this purpose.
 
-15. If a template creates any new publicIPAddresses then it should have an output section that provides details of the IP address and fully qualified domain created to easily retrieve these details after deployment. 
+15. The domainNameLabel property for publicIPAddresses used must be unique.
+domainNameLabel are required to be betweeen 3 and 63 charcters long and to follow the rules specified by this regular expression `^[a-z][a-z0-9-]{1,61}[a-z0-9]$.`
+As the uniquestring function will generate a string that is 13 characters long in the example below it is presumed that the dnsPrefixString prefix string has been checked to be no more than 50 charcters long and to conform to those rules
+
+	```JSON
+"parameters": {
+  "publicIPAddressName": {
+    "type": "string"
+  },
+  "dnsPrefixString": {
+    "type": "string",
+    "maxLength": 50
+  }
+},
+"variables": {
+  "dnsPrefix": "[concat(parameters('dnsPrefixString'),uniquestring(resourceGroup().id))]"
+}
+	```
+
+	If a template creates any new publicIPAddresses then it should have an output section that provides details of the IP address and fully qualified domain created to easily retrieve these details after deployment. 
 
 	```JSON
 "outputs": {
