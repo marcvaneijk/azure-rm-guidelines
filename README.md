@@ -190,6 +190,8 @@ The following guidelines are relevant to the main deployment templates and neste
   "storageAccountName": "[concat(uniquestring(resourceGroup().id),'storage')]"
 }
 	```
+
+	Templates should take account of storageAccounts throughput constraints and deploy across multiple storageAccounts where necessary. Solution templates should distribute virtual machine disks across multiple storage accounts to avoid platform throttling.
 	
 9. If you use Storage in your template, Create a parameter to specify the **storage** namespace. Set the default value of the parameter to **core.windows.net**. Additional endpoints can be specified in the allowed value property. 
 
