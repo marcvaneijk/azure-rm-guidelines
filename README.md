@@ -307,7 +307,7 @@ The following guidelines are relevant to the main deployment templates and neste
 
 	A complex object cannot contain an expression that references a value from a complex object. Define a seperate variable for this purpose.
 
-15. If a template creates any new publicIPAddresses then it MUST have an output section that provides details of the IP address and fully qualified domain created to easily retrieve these details after deployment.
+15. If a template creates any new publicIPAddresses then it should have an output section that provides details of the IP address and fully qualified domain created to easily retrieve these details after deployment. 
 
 	```JSON
 "outputs": {
@@ -321,6 +321,7 @@ The following guidelines are relevant to the main deployment templates and neste
   }
 }
 	```
+	publicIPAddresses assigned to a Virtual Machine Instance should only be used when these are required for application purposes, for connectivity to the resources for debug, management or administrative purposes either inboundNatRules, virtualNetworkGateways or a jumpbox should be used.
 
 ## azuredeploy.ps1
 
