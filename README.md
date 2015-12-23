@@ -250,7 +250,7 @@ The following guidelines are relevant to the main deployment templates and neste
   "keyVaultUri": "[concat('https://',parameters('keyVaultName'),'.',parameters(' keyVaultNamespace'))]"
 }
 	```
-11. **Passwords** must be passed into parameters of type **securestring**.
+11. **Passwords** must be passed into parameters of type **securestring**. Do not specify a defaultValue for a password parameter.
     * Passwords must also be passed to customScriptExtension using the **commandToExecute** property in **protectedSettings**. This will look like below
 	```JSON
 "properties": {
