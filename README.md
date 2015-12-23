@@ -46,7 +46,7 @@ We're following basic GitHub Flow. If you have ever contributed to an open sourc
 10. Linked templates must be placed in a folder called **nested**.
 11. Images used in the README.md must be placed in a folder called **images**.
 
-![alt text](https://raw.githubusercontent.com/marcvaneijk/guidelines/master/images/filesFolderAndNamingconventions.png "Files, folders and naming conventions")
+![alt text](../images/namingConvention.png "Files, folders and naming conventions")
 
 ## README.md
 
