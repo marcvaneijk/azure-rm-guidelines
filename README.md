@@ -44,11 +44,7 @@ We're following basic GitHub Flow. If you have ever contributed to an open sourc
 	* Guidelines on the azuredeploy.ps1 file below.
 9. The **custom scripts** that are needed for successful template execution must be placed in a folder called **scripts**.
 10. Linked templates must be placed in a folder called **nested**.
-11. Images used in the README.md must be placed in a folder called **images**. Reference the images in the README.md with a relative path.
-
-```Markdown
-![alt text](../master/images/namingConvention.png "Files, folders and naming conventions")
-```
+11. Images used in the README.md must be placed in a folder called **images**. Reference the images in the README.md with a relative path. `![alt text](../master/images/namingConvention.png "Files, folders and naming conventions")`
 
 ![alt text](../master/images/namingConvention.png "Files, folders and naming conventions")
 
