@@ -44,7 +44,11 @@ We're following basic GitHub Flow. If you have ever contributed to an open sourc
 	* Guidelines on the azuredeploy.ps1 file below.
 9. The **custom scripts** that are needed for successful template execution must be placed in a folder called **scripts**.
 10. Linked templates must be placed in a folder called **nested**.
-11. Images used in the README.md must be placed in a folder called **images**.
+11. Images used in the README.md must be placed in a folder called **images**. Reference the images in the README.md with a relative path.
+
+```Markdown
+![alt text](../master/images/namingConvention.png "Files, folders and naming conventions")
+```
 
 ![alt text](../master/images/namingConvention.png "Files, folders and naming conventions")
 
@@ -407,7 +411,7 @@ For this guidance a deployment of a SharePoint farm is used as an example. The S
 + **Member resources templates**. Each within an application tier within has its own configuration. Within a tier different instance types can be defined. (e.g. first instance creates a new cluster, additional instances are added to the existing cluster). Each instance type will have its own deployment template.
 + **Scripts**. Widely reusable scripts are applicable for each instance type (e.g. initialize and format additional disks). Custom scripts are created for specific customization purpose are different per instance type.
 
-![alt text](https://raw.githubusercontent.com/marcvaneijk/guidelines/master/images/nestedTemplateDesign.png "Nested templates design")
+![alt text](../master/images/nestedTemplateDesign.png "Nested templates design")
 
 The **main template** is stored in the **root** of the folder, the **other templates** are stored in the **nested** folder. The scripts are stored in the **scripts** folder.
 
