@@ -122,24 +122,7 @@ The following guidelines are relevant to the main deployment templates and neste
 }
 	```
 
-5. **Storage account names** need to be lower case and can't contain hyphens (-) in addition to other domain name restrictions. They also need to be globally unique. This should be configured with a variables (using the expressions **replace**, **toLower** and **uniqueString**). A storageaccount has a limit of 24 characters. Set the maxLength of 11 to the parameter for the newStorageAccountName. This allows the uniqueString of 13 characters to be appended.
-
-	```JSON
-"parameters": {
-  "storageAccountNamePrefix": {
-    "type": "string",
-    "maxLength": 11,
-    "metadata": {
-      "description": "Name prefix of the Storage Account"
-    }
-  }
-},
-"variables": {
-  "storageAccountName": "[replace(replace(tolower(concat(parameters('storageAccountNamePrefix'), uniquestring(resourceGroup().id))), '-',''),'.','')]"
-}
-	```
-
-6. Do not hardcode the **apiVersion** for a resource. Create a **complex object variable** with the name apiVersion. Define a sub value for each resource provider, containing the api versions for each resource type used in the template. With this complex object the the apiVersion property of the resource uses the same namespace as the resource type. This also allows you to easily update an apiVersion for a specific resource type.
+5. Do not hardcode the **apiVersion** for a resource. Create a **complex object variable** with the name apiVersion. Define a sub value for each resource provider, containing the api versions for each resource type used in the template. With this complex object the the apiVersion property of the resource uses the same namespace as the resource type. This also allows you to easily update an apiVersion for a specific resource type.
 
 	```JSON
 "variables": {
@@ -166,7 +149,7 @@ The following guidelines are relevant to the main deployment templates and neste
 ]
 	```
 	
-7. Every resource in the template must have the lower-case **comments** property specified.
+6. Every resource in the template must have the lower-case **comments** property specified.
 
 	```JSON
 "resources": [
@@ -183,7 +166,7 @@ The following guidelines are relevant to the main deployment templates and neste
 ]
 	```
 
-8. Do not use a parameter to specify the **location**. Use the location property of the resourceGroup instead. By using the **resourceGroup().location** expression for all your resources, the resources in the template will automatically be deployed in the same location as the resource group.
+7. Do not use a parameter to specify the **location**. Use the location property of the resourceGroup instead. By using the **resourceGroup().location** expression for all your resources, the resources in the template will automatically be deployed in the same location as the resource group.
 
 	```JSON
 "resources": [
@@ -200,6 +183,14 @@ The following guidelines are relevant to the main deployment templates and neste
 ]
 	```
 
+8. Do not create a parameter for your a storage account name. **Storage account names** need to be lower case and can't contain hyphens (-) in addition to other domain name restrictions. They also need to be globally unique. This should be configured with a variables (using the expressions **replace**, **toLower** and **uniqueString**). A storageaccount has a limit of 24 characters. A storage accounts with a common prefix (uniquestring) will not get clustered on the same racks.
+
+	```JSON
+"variables": {
+  "storageAccountName": "[concat(uniquestring(resourceGroup().id),'storage')]"
+}
+	```
+	
 9. If you use Storage in your template, Create a parameter to specify the **storage** namespace. Set the default value of the parameter to **core.windows.net**. Additional endpoints can be specified in the allowed value property. 
 
 	```JSON
