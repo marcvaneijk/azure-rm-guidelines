@@ -35,7 +35,7 @@ We're following basic GitHub Flow. If you have ever contributed to an open sourc
 3. Include a **README.md** file that explains how the template works. 
 	* Guidelines on the README.md file below.
 4. The template file must be named **azuredeploy.json**.
-5. There should be be a parameters file name **azuredeploy.parameters.json**. 
+5. There should be a parameters file named **azuredeploy.parameters.json**. 
 	* Please fill out the values for the parameters according to rules defined in the template (allowed values etc.), For parameters without rules, a simple "changeme" will do as the acomghbot only checks for sytactic correctness using the ARM Validate Template [API](https://msdn.microsoft.com/en-us/library/azure/dn790547.aspx).
 6. Parameter files can be used to specify the parameters for different environments. (e.g. dev, test, production). Specify additional parameter files in the format **azuredeploy.dev.parameters.json**. Where *dev* describes the environment.
 7. The template folder must contain a **metadata.json** file to allow the template to be indexed on [Azure.com](http://azure.microsoft.com/).
