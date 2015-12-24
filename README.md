@@ -181,7 +181,7 @@ The following guidelines are relevant to the main deployment template and nested
 ]
 	```
 
-8. Do not create a parameter for your a storage account name. **Storage account names** need to be lower case and can't contain hyphens (-) in addition to other domain name restrictions. They also need to be globally unique. This should be configured with a variables (using the expressions **replace**, **toLower** and **uniqueString**). A storageaccount has a limit of 24 characters. A storage accounts with a common prefix (uniquestring) will not get clustered on the same racks.
+8. Do not create a parameter for a storage account name. **Storage account names** need to be lower case and can't contain hyphens (-) in addition to other domain name restrictions. A storage account has a limit of 24 characters. They also need to be globally unique. To prevent any validation issue configure a variables (using the expression **uniqueString** and a static value **storage**). Storage accounts with a common prefix (uniquestring) will not get clustered on the same racks.
 
 	```JSON
 "variables": {
@@ -189,7 +189,7 @@ The following guidelines are relevant to the main deployment template and nested
 }
 	```
 
-	Templates should take account of storageAccounts throughput constraints and deploy across multiple storageAccounts where necessary. Solution templates should distribute virtual machine disks across multiple storage accounts to avoid platform throttling.
+	Templates should consider storage accounts throughput constraints and deploy across multiple storage accounts where necessary. Templates should distribute virtual machine disks across multiple storage accounts to avoid platform throttling.
 	
 9. If you use Storage in your template, Create a parameter to specify the **storage** namespace. Set the default value of the parameter to **core.windows.net**. Additional endpoints can be specified in the allowed value property. 
 
