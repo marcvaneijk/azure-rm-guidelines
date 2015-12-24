@@ -101,7 +101,7 @@ The metadata.json file will be validated using these rules
 
 ## Deployment template guidelines
 
-The following guidelines are relevant to the main deployment templates and nested templates (if used).
+The following guidelines are relevant to the main deployment template and nested templates (if used).
 
 1. Template parameters should follow **camelCasing**
 2. Try to reduce the **number of parameters** a user has to enter to deploy your template. Create variables for properties that do not need to be globally unique (e.g VNETs, NICs, PublicIPs, Subnets, NSGs). 
