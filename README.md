@@ -104,8 +104,8 @@ The metadata.json file will be validated using these rules
 The following guidelines are relevant to the main deployment templates and nested templates (if used).
 
 1. Template parameters should follow **camelCasing**
-2. Try to reduce the **number of parameters** a user has to enter to deploy your template. Make things that do not need to be globally unique such as VNETs, NICs, PublicIPs, Subnets, NSGs as variables. 
-	* If you must include a parameter, please include a default value as well. See the next rule for naming convention for the default values.
+2. Try to reduce the **number of parameters** a user has to enter to deploy your template. Create variables for properties that do not need to be globally unique (e.g VNETs, NICs, PublicIPs, Subnets, NSGs). 
+	* If you must include a parameter, define the **defaultValue**, unless the parameter is used for a password. See the next rule for naming convention for the default values.
 3. Name **variables** using this scheme **templateScenarioResourceName** (e.g. simpleLinuxVMVNET, userRoutesNSG, elasticsearchPublicIP etc.) that describe the scenario rather. This ensures when a user browses all the resources in the Portal there aren't a bunch of resources with the same name (e.g. myVNET, myPublicIP, myNSG)
 4. Every parameter in the template must have the **lower-case description** tag specified using the metadata property. This looks like below
 
