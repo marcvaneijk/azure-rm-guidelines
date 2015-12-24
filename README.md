@@ -60,9 +60,7 @@ Do not include the parameters or the variables of the deployment script. We rend
 
 ## metadata.json
 
-Here are the required parameters for a valid metadata.json file
-
-To be more consistent with the Visual Studio and Gallery experience we're updating the metadata.json file structure. The new structure looks like below
+A valid metedata.json must adhere to the following structure
 
 ```JSON
 {
@@ -93,7 +91,7 @@ The metadata.json file will be validated using these rules
 
 **githubUsername**
 
-+ This is the username of the original template author. Please do not change this
++ This is the username of the original template author. Do not change this
 + This is used to display template author and Github profile pic in the Azure.com index
 
 **dateUpdated**
