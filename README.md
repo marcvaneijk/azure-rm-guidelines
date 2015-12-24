@@ -242,7 +242,7 @@ The following guidelines are relevant to the main deployment template and nested
 }
 	```
 11. **Passwords** must be passed into parameters of type **securestring**. Do not specify a defaultValue for a parameter that is used for a password or an SSH key.
-    * Passwords must also be passed to customScriptExtension using the **commandToExecute** property in **protectedSettings**. This will look like below
+	Passwords must also be passed to customScriptExtension using the **commandToExecute** property in **protectedSettings**. This will look like below
 	```JSON
 "properties": {
   "publisher": "Microsoft.OSTCExtensions",
@@ -257,7 +257,7 @@ The following guidelines are relevant to the main deployment template and nested
   }
 }
 	```
-    * In order to ensure that secrets which are passed as parameters to **virtualMachines/extensions** are encrypted the **protectedSettings** property of the relevant extensions must be used.
+	In order to ensure that secrets which are passed as parameters to **virtualMachines/extensions** are encrypted the **protectedSettings** property of the relevant extensions must be used.
 
 12. Dependencies between resources can be defined with the expression **dependsOn**. This creates an explicit dependecy. The expression **reference()** can be used to create an implicit dependency. The guidance is to use the reference() to avoid the risk having an unnecessary dependsOn element stop the deployment engine from doing aspects of the deployment in parallel. Reference can only be used against a single resource ([syntax](https://azure.microsoft.com/en-us/documentation/articles/resource-group-template-functions/#reference)), and is used for cases where the properties of one resource are needed for the provisioning of another resource. For example; a virtual machine just needs the resourceId (not properties) in this case dependsOn should be used.
 13. Use **tags** to add metadata to resources for billing detail purposes. Tags should not be used to provide metadata that you will use to identify and query links between resources.
