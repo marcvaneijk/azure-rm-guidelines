@@ -354,7 +354,7 @@ Get-AzureRmResourceGroupDeployment -ResourceGroupName $ResourceGroupName | ft De
 
 ## Single template or nested templates
 
-It is obvious to create a single deployment template for deploying a single resource. Nested templates are more common for more advanced scenarios. The following guidance helps to decide between a single template or a decomposed nested template design. 
+It is obvious to create a single deployment template for deploying a single resource. Nested templates are common for more advanced scenarios. The following guidance helps to decide between a single template or a decomposed nested template design. 
 
 + Create a single template for a single tier application
 + Create a nested templates deployment for a multitier application
