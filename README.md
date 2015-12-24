@@ -40,7 +40,7 @@ We're following basic GitHub Flow. If you have ever contributed to an open sourc
 6. Parameter files can be used to specify the parameters for different environments (e.g. dev, test, production). Specify additional parameter files in the format **azuredeploy.dev.parameters.json**. Where *dev* describes the environment.
 7. The template folder must contain a **metadata.json** file to allow the template to be indexed on [Azure.com](http://azure.microsoft.com/).
 	* Guidelines on the metadata.json file below.
-8. Create a PowerShell script to deploy the template named **azuredeploy.ps1**. Create the script based on the Microsoft Azure PowerShell module version 1 or higher.
+8. Create a PowerShell script to deploy the template named **azuredeploy.ps1**. Create the script based on the Microsoft Azure PowerShell module v1.0 or later.
 	* Guidelines on the azuredeploy.ps1 file below.
 9. The **custom scripts** that are needed for successful template execution must be placed in a folder called **scripts**.
 10. Linked templates must be placed in a folder called **nested**.
