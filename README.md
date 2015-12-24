@@ -44,13 +44,13 @@ We're following basic GitHub Flow. If you have ever contributed to an open sourc
 	* Guidelines on the azuredeploy.ps1 file below.
 9. The **custom scripts** that are needed for successful template execution must be placed in a folder called **scripts**.
 10. Linked templates must be placed in a folder called **nested**.
-11. Images used in the README.md must be placed in a folder called **images**. Reference the images in the README.md with a relative path (e.g. `![alt text](../master/images/namingConvention.png "Files, folders and naming conventions")`). This ensures the link will reference the target repository if the source repository is forked.
+11. Images used in the README.md must be placed in a folder called **images**. 
 
 ![alt text](../master/images/namingConvention.png "Files, folders and naming conventions")
 
 ## README.md
 
-The README.md describes your deployment. A good description helps other community members to understand your deployment. The README.md uses [Github Flavored Markdown](https://guides.github.com/features/mastering-markdown/) for formatting text. If you want to add images to your README.md file, store the images in the images folder. A good README.md contains the following sections
+The README.md describes your deployment. A good description helps other community members to understand your deployment. The README.md uses [Github Flavored Markdown](https://guides.github.com/features/mastering-markdown/) for formatting text. If you want to add images to your README.md file, store the images in the images folder. Reference the images in the README.md with a relative path (e.g. `![alt text](../master/images/namingConvention.png "Files, folders and naming conventions")`). This ensures the link will reference the target repository if the source repository is forked. A good README.md contains the following sections
 
 + Description of what the template will deploy
 + Deploy to Azure button
