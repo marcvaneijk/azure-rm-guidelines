@@ -50,13 +50,19 @@ We're following basic GitHub Flow. If you have ever contributed to an open sourc
 
 ## README.md
 
-The README.md describes your deployment. A good description helps other community members to understand your deployment. The README.md uses [Github Flavored Markdown](https://guides.github.com/features/mastering-markdown/) for formatting text. If you want to add images to your README.md file, store the images in the images folder. Reference the images in the README.md with a relative path (e.g. `![alt text](../master/images/namingConvention.png "Files, folders and naming conventions")`). This ensures the link will reference the target repository if the source repository is forked. A good README.md contains the following sections
+The README.md describes your deployment. A good description helps other community members to understand your deployment. The README.md uses [Github Flavored Markdown](https://guides.github.com/features/mastering-markdown/) for formatting text. If you want to add images to your README.md file, store the images in the images folder. Reference the images in the README.md with a relative path (e.g. `![alt text](images/namingConvention.png "Files, folders and naming conventions")`). This ensures the link will reference the target repository if the source repository is forked. A good README.md contains the following sections
 
-+ Description of what the template will deploy
 + Deploy to Azure button
++ Description of what the template will deploy
++ Tags, that can be used for seach. Specify the tags comma seperated and enclosed between two back-ticks (e.g `Tags: cluster, ha, sql`)
 + PowerShell deployment steps based on Microsoft Azure PowerShell v1.0 or later
++ \*Optional: Prerequisites
++ \*Optional: Description on how to use the application
++ \*Optional: Notes
 
 Do not include the parameters or the variables of the deployment script. We render this on [Azure.com] (https://azure.microsoft.com/en-us/documentation/templates/) from the template. Specifying these in the README.md will result in duplicate entries on [Azure.com] (https://azure.microsoft.com/en-us/documentation/templates/).
+
+You can download a template [README.md](/examples). This folder also contains some example README.md files.
 
 ## metadata.json
 
